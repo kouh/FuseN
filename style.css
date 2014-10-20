@@ -1,0 +1,16 @@
+  #workspace{
+    overflow: hidden;
+    font-size: 0.75em;
+  }
+  #workspace li{
+    display: block;
+    width: 20em;
+    height: 5em;
+    padding: 5px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #888;
+    margin: 1em;
+    overflow: scroll;
+    float: left;
+  }
