@@ -14,8 +14,6 @@ $(function(){
   $( "#workspace" ).sortable({
     revert: true
   });
-
-  //
 });
 
 function addFusen(data){
