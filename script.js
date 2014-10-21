@@ -28,6 +28,7 @@ function addFusen(data){
       .on('blur',function(){
         var fusenList = [];
         $('#workspace li').each(function(){
+          if($(this).text().trim() == '') return;
           fusenList.push($(this).text());
         });
         localStorage.setItem('fusen',JSON.stringify(fusenList));
