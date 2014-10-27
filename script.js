@@ -2,7 +2,7 @@ $(function(){
   var savedData = localStorage.getItem("fusen");
   var fusenList = JSON.parse(savedData);
   
-  if(fusenList && (fusenList.constructor != 'Array')){
+  if(fusenList){
     jQuery.each(fusenList,function(){
       addFusen(this);
     });
@@ -11,29 +11,37 @@ $(function(){
     addFusen();
   });
 
-  $( "#workspace" ).sortable({
-    revert: true
+  $(window).on("beforeunload",function(e){
+    save();
+  });
+
+  $(window).on("keydown",function(e){
+    if( e.ctrlKey === true && e.which == 78 ){
+      var li = addFusen();
+      li.focus();
+    }
   });
 });
 
 function addFusen(data){
   data = data || '';
-  $('#workspace').append(
-    $('<li>')
-      .attr('contenteditable','true')
-      .text(data)
-      .on('click',function(){
-        $(this).focus();
-      })
-      .on('blur',function(){
-        var fusenList = [];
-        $('#workspace li').each(function(){
-          if($(this).text().trim() == '') return;
-          fusenList.push($(this).text());
-        });
-        localStorage.setItem('fusen',JSON.stringify(fusenList));
-        console.log('saved!');
-      })
-  );
+  var li = $('<li>')
+    .attr('contenteditable','true')
+    .text(data)
+    .draggable({
+      containment: 'parent',
+      scroll: false,
+    });
+  $('#workspace').append(li);
+  return li;
 }
-  
+
+function save(){
+  var fusenList = [];
+  $('#workspace li').each(function(){
+    if($(this).text().trim() == '') return;
+    fusenList.push($(this).text());
+  });
+  localStorage.setItem('fusen',JSON.stringify(fusenList));
+  console.log('saved!');
+}
